@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ul li {
+             list-style: none;
+             width: 100px;
+        }
+        ul li:hover>a{
+            background-color: #f03636;
+        }
+        ul li a{
+            background-color: #f90;
+            color:black;
+            text-decoration: none;
+            width: 100px;
+            display: block;
+            text-align: center;
+            line-height: 50px;
+        }
+        .nav>li{
+            position: relative;
+        }
+        .nav>li>ul{
+            position: absolute;
+            top: 0;
+            left: 100px;
+            display: none;
+            border-left: 1px solid #e78080;
+        }
+        .nav>li:hover>ul{
+            display: block;
+        }
+        .box1{
+            background-color: #26d45d;
+            width: 50px;
+            line-height: 30px;
+            transition: all  .5s;
+        }
+        .box1:hover{
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <ul class="nav clearfix">
+          <li>
+            <a href="#">享品质</a>
+          </li>
+          <li>
+            <a href="#">服饰美妆</a>
+            <ul>
+              <li>
+                <a href="#">品牌上新</a>
+              </li>
+              <li>
+                <a href="#">超值单品</a>
+              </li>
+              <li>
+                <a href="#">原创设计</a>
+              </li>
+              <li>
+                <a href="#">服饰勋章</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">家电手机</a>
+          </li>
+          <li>
+            <a href="#">电脑数码</a>
+            <ul>
+              <li>
+                <a href="#">品牌上新</a>
+              </li>
+              <li>
+                <a href="#">超值单品</a>
+              </li>
+              <li>
+                <a href="#">原创设计</a>
+              </li>
+              <li>
+                <a href="#">服饰勋章</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">母婴家居</a>
+          </li>
+          <li>
+            <a href="#">图书汽车</a>
+          </li>
+          <li>
+            <a href="#">还没逛够</a>
+          </li>
+        </ul>
+      </div>
+      <div class="box1">123</div>
+</body>
+</html>
