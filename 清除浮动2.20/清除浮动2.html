@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>清除浮动2</title>
+        <style>
+            /*让父元素也跟着浮动
+            缺点：父元素会随之产生浮动带来的影响*/
+            .box{
+                border: 1px solid red;
+                float: left;
+            }
+            .left,.right,.text,.nav{
+                border: 1px solid blue;
+                width: 200px;
+                height: 200px;
+            }
+            .left{
+                float: left;
+            }
+            .right{
+                float: right;
+            }
+            .text{
+                float: left;
+            }
+            .nav{
+                float: left;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="box">
+            <div class="left">左边盒子</div>
+            <div class="right">右边盒子</div>
+            <div class="text">第三个盒子</div>
+            <div class="nav">第四个盒子</div>
+        </div>
+    </body>
+</html>

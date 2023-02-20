@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>清除浮动3</title>
+        <style>
+            /*在父元素的结尾处，添加一个空元素，并利用clear设置清除浮动
+            缺点：在大项目中，容易造成代码冗余*/
+            .box{
+                border: 1px solid red;
+            }
+            .left,.right,.text,.nav,.a,.b,.c{
+                border: 1px solid blue;
+                width: 200px;
+                height: 200px;
+            }
+            .left{
+                float: left;
+            }
+            .right{
+                float: right;
+            }
+            .text{
+                float: left;
+            }
+            .nav{
+                float: right;
+            }
+            .a{
+                float: left;
+            }
+            .b{
+                float: left;
+            }
+            .c{
+                float: left;
+            }
+            .clear{
+                clear: both;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="box">
+            <div class="left">左边盒子</div>
+            <div class="right">右边盒子</div>
+            <div class="text">第三个盒子</div>
+            <div class="nav">第四个盒子</div>
+            <div class="a">第五个盒子</div>
+            <div class="b">第六个盒子</div>
+            <div class="c">第七个盒子</div>
+            <div class="clear"></div>
+        </div>
+    </body>
+</html>
