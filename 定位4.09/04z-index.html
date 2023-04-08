@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>z-index</title>
+    <style>
+      div {
+        box-sizing: border-box;
+      }
+      .box {
+        width: 400px;
+        border: 1px solid;
+        padding: 10px;
+        margin: 0 auto;
+      }
+
+      .box > div {
+        width: 200px;
+        height: 200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .box1 {
+        background-color: #f0932b;
+
+        position: absolute;
+        left: 20px;
+        top: 20px;
+
+        /* 通过设置z-index设置层叠顺序 
+            设置的值为一个正数：
+                数值越大表示在最前面
+                
+        */
+        z-index: 20;
+      }
+      .box2 {
+        background-color: #22a6b3;
+        /* margin: 20px auto; */
+
+        position: absolute;
+        left: 40px;
+        top: 40px;
+        z-index: 21;
+      }
+      .box3 {
+        background-color: #6ab04c;
+        position: absolute;
+        left: 60px;
+        top: 60px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="box1"></div>
+      <div class="box2"></div>
+      <div class="box3"></div>
+    </div>
+  </body>
+</html>

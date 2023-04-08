@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>绝对定位</title>
+    <style>
+      div {
+        box-sizing: border-box;
+      }
+      .box {
+        width: 400px;
+        border: 1px solid;
+        padding: 10px;
+        margin: 0 auto;
+      }
+
+      .box > div {
+        width: 200px;
+        height: 200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .box1 {
+        background-color: #f0932b;
+      }
+      .box2 {
+        background-color: #22a6b3;
+        /* margin: 20px auto; */
+
+        /* 设置绝对定位 :
+           1、绝对定位元素会脱离正常的文档流，元素原来的位置不会被保留
+              会被后面的内容顶替；
+            2、参考点：
+                从父元素开始往上找，找postion的值不为static的，那么
+                就以此元素为参考点；
+                若没有找到就浏览器的左上角为参考点
+        */
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      .box3 {
+        background-color: #6ab04c;
+      }
+
+      .box {
+        /* box1的父元素的定位设置为position:relactive */
+        /* position: relative; */
+      }
+
+      body {
+        width: 600px;
+        margin: 0 auto;
+        /* position: relative; */
+        left: 0;
+        top: 0;
+
+        height: 2000px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="box1"></div>
+      <div class="box2">设置为绝对定位： position:absolute;</div>
+      <div class="box3"></div>
+    </div>
+  </body>
+</html>

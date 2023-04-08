@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>相对定位</title>
+    <style>
+      div {
+        box-sizing: border-box;
+      }
+      .box {
+        width: 400px;
+        border: 1px solid;
+        padding: 10px;
+        margin: 0 auto;
+      }
+
+      .box > div {
+        width: 200px;
+        height: 200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .box1 {
+        background-color: #f0932b;
+      }
+      .box2 {
+        background-color: #22a6b3;
+        /* margin: 20px auto; */
+
+        /* 设置固定定位 :
+            与绝对定位类似，只是相对于屏幕（视口）固定
+        */
+        position: fixed;
+        /* left: 0;
+
+        top: 0; */
+        right: 20px;
+        bottom: 20px;
+      }
+      .box3 {
+        background-color: #6ab04c;
+      }
+      body {
+        height: 2000px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="box1"></div>
+      <div class="box2">设置为相对定位： position:fixed;</div>
+      <div class="box3"></div>
+    </div>
+  </body>
+</html>
