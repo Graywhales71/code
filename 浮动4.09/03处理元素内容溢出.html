@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>处理元素内容的溢出</title>
+    <style>
+      .box {
+        border: 1px solid;
+        height: 120px;
+        width: 200px;
+        /* overflow: hidden; */
+        overflow-x: hidden;
+        overflow-y: scroll;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      从汪涵救场，优雅应对突发危机，到蔡康永的说话之道，
+      无不体现幽默的重要性和口才的影响力...
+      话说对了，事就成了，80%的事情都伤在了不会表达上，
+      64个说话技巧，让你的言语表达更有魅力..
+      <div style="width: 300px"></div>
+    </div>
+  </body>
+</html>
+<!-- 
+    处理元素内容的溢出：
+        - 默认情况下：
+            当元素标准的内容超出元素的尺寸，元素的内容会
+            越过元素的边界正常显示
+        - 可以手动的设置
+            overflow属性同时设置的是X和Y轴
+                auto在水平和垂直方向设置滚动条
+                scroll 添加滚动条
+                hidden 多余的内容会被剪切掉
+            overflow-x 
+            overflow-y
+            
+
+ -->

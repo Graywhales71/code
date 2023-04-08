@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>清除浮动</title>
+    <style>
+      .box {
+        border: 1px solid red;
+        width: 400px;
+      }
+
+      .div1 {
+        width: 100px;
+        height: 50px;
+
+        float: right;
+      }
+
+      .div2 {
+        width: 100px;
+        height: 150px;
+        float: left;
+      }
+      .div1,
+      .div2 {
+        border: 1px solid;
+      }
+
+      /* 第一种方式：设置父元素的高度 */
+      /* .box {
+        height: 152px;
+      } */
+      /* 第二种方式：在父元素添加一个没有内容的元素，
+        放在最后
+       */
+      .clear {
+        /* 设置两边都清除 */
+        /* clear: both; */
+      }
+
+      /* 第三种方式：推荐用 */
+      .clearfix::after {
+        /* content属性，设置添加的伪元素种的内容 */
+        /* content默认为内联元素 */
+        content: "测试";
+        display: block;
+        clear: both;
+
+        /* 直接隐藏元素的内容 */
+        visibility: hidden;
+        /* 设置字体为0，防止有空格 */
+        font-size: 0;
+      }
+
+      /* 第四种方式：设置父元素overflow:hidden 
+        不能设置height
+      */
+      .box {
+        /* overflow: hidden; */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- clearfix清除的CSS设置，父元素上 -->
+    <div class="box clearfix">
+      <!-- <div class="box"> -->
+      <div class="div1">div1</div>
+      <div class="div2">div2</div>
+      <div class="clear"></div>
+    </div>
+  </body>
+</html>
