@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D相册</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .wrap{
+            transform-style: preserve-3d;
+            perspective: 600px;
+        }
+        @keyframes move{
+            0%{
+                transform: rotate3d(0,1,0,0deg);
+            }
+            100%{
+                transform: rotate3d(0,1,0,360deg);
+            }
+        }
+        ul{
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+            list-style: none;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotate3d(0,1,0,0deg);
+            animation: move 20s linear infinite;
+        }
+        ul:hover{
+            transform: rotate3d(0,1,0,360deg);
+        }
+        ul li{
+            width: 100px;
+            height: 100px;
+            background-color: #f90;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: 0 0 -200px;
+            transform: translate3d(-50%,-50%,200px);
+        }
+        img{
+            width: 100px;
+            height: 100px;
+        }
+        ul li:nth-child(even){
+            background-color: aquamarine;
+        }
+        ul li:nth-child(1){
+            transform: translate3d(-50%,-50%,200px) rotateY(60deg);
+        }
+        ul li:nth-child(2){
+            transform: translate3d(-50%,-50%,200px) rotateY(120deg);
+        }
+        ul li:nth-child(3){
+            transform: translate3d(-50%,-50%,200px) rotateY(180deg);
+        }
+        ul li:nth-child(4){
+            transform: translate3d(-50%,-50%,200px) rotateY(240deg);
+        }
+        ul li:nth-child(5){
+            transform: translate3d(-50%,-50%,200px) rotateY(300deg);
+        }
+        ul li:nth-child(6){
+            transform: translate3d(-50%,-50%,200px) rotateY(360deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <ul>
+            <li><img src="./img3D/038228e8529e21b0ec1766dacef3fdd8.jpeg" alt=""></li>
+            <li><img src="./img3D/R-C.jfif" alt=""></li>
+            <li><img src="./img3D/OIP-C (1).jfif" alt=""></li>
+            <li><img src="./img3D/OIP-C.jfif" alt=""></li>
+            <li><img src="./img3D/R-C (3).jfif" alt=""></li>
+            <li><img src="./img3D/R-C (2).jfif" alt=""></li>
+        </ul>
+    </div>
+</body>
+</html>
