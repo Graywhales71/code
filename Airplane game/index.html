@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>飞机</title>
+  <style>
+    #cvs{
+      border: 1px solid;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="cvs" width="600" height="600"></canvas>
+  <script>
+    // 获取画布的元素对象
+    const cvsEle = document.querySelector("#cvs")
+    // 获取canvas的上下文对象
+    const ctx = cvsEle.getContext("2d");
+
+    // 创建一个飞机图像对象
+    const planeImg = new Image()
+    planeImg.src = './img/plane.png'
+    // 创建一个背景的图像对象
+    const bgImg = new Image()
+    bgImg.src = './img/puzzle.jpg'
+    // 创建一个子弹图像对象
+    const zdImg = new Image()
+    zdImg.src = './img/zidan.png'
+    // 创建陨石图像对象
+    const fallingstoneImgs = []
+    for(let i=0;i<3;i++){ 
+      fallingstoneImgs.push( new Image())
+      fallingstoneImgs[i].src = `./img/fallingstone${i+1}.png`
+    }
+
+    // 爆炸的图像对象
+    const boomImg = new Image()
+    boomImg.src = './img/boom.png'
+
+    // 声明一个数组，用来存放陨石对象
+    let fallingstones = []
+    // 记录分数
+    let score = 0;
+
+
+    // 定义一个函数用来检测碰撞
+    function pengzhuang(objsA,objsB){
+      for(let i in objsA){
+        for(let j in objsB){
+          let axl = objsA[i].positionX
+          let axr = objsA[i].positionX + objsA[i].width
+          let ayt = objsA[i].positionY
+          let ayb = objsA[i].positionY + objsA[i].height
+
+          let bxl = objsB[j].positionX
+          let bxr = objsB[j].positionX + objsB[j].width
+          let byt = objsB[j].positionY
+          let byb = objsB[j].positionY + objsB[j].height
+
+          if(axl>bxl && axl < bxr || axr > bxl && axr < bxr || axl < bxl && axr > bxr ){
+            if(ayt>byt && ayt < byb || ayb > byt && ayb < byb || ayt < byt && ayb > byb){
+              new Boom(boomImg,objsB[j].positionX,objsB[j].positionY).drawSelf()
+              // 碰撞了
+              objsA[i].disabled = objsB[j].disabled = true;
+              console.log('碰撞了');
+              score ++  // 加一分
+            }
+          }
+          
+        }
+      }
+    }
+    
+
+    // 创建一个背景类
+    class Background{
+      constructor(imgObj,positionX,positionY,width,height){
+        this.imgObj = imgObj;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.width= width;
+        this.height = height;
+      }
+      drawSelf(){
+         // drawImage(图像对象,截取图像的x坐标,截取图像的y坐标,截取图像宽度,截取图像高度,绘制到画布的x坐标,绘制到画布的y坐标,绘制到画布的宽度,绘制到画布的高度)
+        ctx.drawImage(this.imgObj,this.positionX,this.positionY,600,600,0,0,600,600)
+      }
+      run(){
+        setInterval(()=>{
+          if(this.positionY>0){
+            this.positionY -= 2
+          }else{
+            this.positionY = 600
+          }
+        },20)
+      }
+    }
+
+    // 创建一个飞机类
+    class Plane{
+      constructor(imgObj,positionX,positionY,width,height){
+        this.imgObj = imgObj;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.width = width;
+        this.height = height;
+        this.zidanList = [];
+        this.zidanObj = zdImg;
+      }
+      // 定义一个飞机绘制自已到画布上的方法
+      drawSelf(){
+
+        // 调用清除无效子弹的方法
+        this.clearZidanList()
+        // 画子弹
+        for(let i in this.zidanList){
+          this.zidanList[i].drawSelf()
+        }
+
+        // drawImage(图像对象,x坐标,y坐标,图像宽度,图像高度)
+        ctx.drawImage(this.imgObj,this.positionX,this.positionY,this.width,this.height)   // 绘制飞机
+      }
+      // 定义一个发射炮弹的方法
+      shot(){
+        new Audio('./data/004.mp3').play()  // 发射音效
+        let zd =  new Zidan(this.zidanObj,this.positionX+this.width/2,this.positionY)  // 创建子弹
+        zd.run()
+        this.zidanList.push(zd)
+      }
+      // 清除无效子弹
+      clearZidanList(){
+        this.zidanList = this.zidanList.filter(item=> item.disabled == false)
+      }
+    }
+    // 创建一个子弹类
+    class Zidan{
+      constructor(imgObj,positionX,positionY,width,height){
+        this.imgObj = imgObj;
+        this.width = width || 10;
+        this.height = height || 40;
+        this.positionX = positionX-this.width/2;
+        this.positionY = positionY;
+        this.disabled = false;
+      }
+      drawSelf(){
+        ctx.drawImage(this.imgObj,this.positionX,this.positionY,this.width,this.height)
+      }
+      run(){
+        let timer = setInterval(() => {
+          this.positionY -= 5
+          if(this.positionY<-this.height){
+            clearInterval(timer);
+            this.disabled = true;
+          }
+        }, 20);
+      }
+
+    }
+
+    // 陨石类
+    class Fallingstone{
+      constructor(imgObj,positionX,positionY,width,height,direction,speed){
+        this.imgObj = imgObj;
+        // 0-800
+        this.positionX = positionX || Math.floor(Math.random()*(800-0)+1)-100 ;  // 产生一个-100 - 700 的随机数
+        this.positionY = positionY ||Math.floor(Math.random()*(100)+1)-200 ;   // -200 - -100
+        this.width = width || Math.floor(Math.random()*(100-30)+1)+30;   // 随机宽度 30-100
+        this.height = height || this.width;
+        this.direction = direction || Math.floor(Math.random()*(150-30)+1)+30;  //30-150
+        this.speed = speed || Math.floor(Math.random()*(5-2)+1)+2;  // 5-2;
+        this.disabled = false;
+      }
+      drawSelf(){
+        ctx.drawImage(this.imgObj,this.positionX,this.positionY,this.width,this.height)
+      }
+      run(){
+        let incrementX = Math.cos(this.direction/180*Math.PI)* this.speed;
+        let incrementY = Math.sin(this.direction/180*Math.PI) * this.speed;
+        let timer = setInterval(() => {
+          this.positionX += incrementX;  // x方向上的增量
+          this.positionY += incrementY;  // y 方向上的增量
+          if(this.positionX < -this.width-100 || this.positionX > 600+100 || this.positionY > 600 ){
+            this.disabled = true
+            clearInterval(timer)
+          }
+        }, 40);
+      }
+    }
+
+    // 爆炸类
+    class Boom{
+      constructor(imgObj,positionX,positionY,width,height){
+        this.imgObj = imgObj;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.width = width || 100;
+        this.height = height || 150;
+      }
+      drawSelf(){
+        new Audio('./data/boom.mp3').play()  // 爆炸音效
+        let count = 0   // 当前要绘制的部分的编号
+        let timer = setInterval(() => {
+           if(count < 9){
+            // 绘制爆炸图像的指定部分
+              ctx.drawImage(this.imgObj,count%4*36+1,Math.floor(count/4)*50+1 ,33,47,this.positionX,this.positionY,this.width,this.height)
+              count ++
+            }else{
+              clearInterval(timer)  // 清除timer
+            }
+        }, 40);
+      }
+
+    }
+
+    let player1 = new Plane(planeImg,300,300,60,60)   // 通过Plane类实例化一个飞机对象
+    // let player2 = new Plane(planeImg,100,200,100,100)   // 实例化另一个飞机对象
+    let bg1 = new Background(bgImg,0,600,600,1200)   // 实例化一个背景对象
+    bg1.run()  // 调用背景对象的run()方法，使背景动起来
+
+    onload = function(){  // 页面加载完成后执行的事件处理程序， 等待图片对象加载完成
+           
+      setInterval(() => {   // 设置一个计时器 刷新画布内容    间隔40ms帧率大概是24帧/s
+        // 清除画布上的内容
+        ctx.clearRect(0,0,600,600)
+        // 绘制背景
+        bg1.drawSelf()
+        // 画飞机
+        player1.drawSelf()  
+        // player2.drawSelf()
+        
+        pengzhuang(player1.zidanList,fallingstones)
+
+
+        // 清除不可用的陨石
+        fallingstones = fallingstones.filter(item=>item.disabled == false)
+
+        // 创建陨石
+        if(fallingstones.length<5){
+          let fs = new Fallingstone(fallingstoneImgs[Math.floor(Math.random()*3)])
+          fs.run()
+          fallingstones.push(fs)  // 将创建的陨石存放在数组中
+        }
+
+        // 绘制陨石数组中的陨石对象
+        for(let i in fallingstones){
+          fallingstones[i].drawSelf()
+        }
+
+        // 画分数
+        ctx.font = '30px 黑体'
+        ctx.fillStyle = '#ffffff'
+        ctx.fillText(`得分:${score}`,20,50)
+        
+      }, 40);
+
+    }
+
+    // 绑定方向按下的事件处理程序
+    let timerLeft=timerRight=timerUp=timerDown=null
+    document.addEventListener('keydown',function(e){
+      console.log(e.keyCode)    // 下40  上38   左37   右39
+      switch(e.keyCode){
+        case 37 : 
+          if(!timerLeft){
+            timerLeft = setInterval(() => {
+              // 让飞机向左移动
+              player1.positionX -= 5
+            }, 20);
+          }
+          break;
+        case 39 : 
+          if(!timerRight){
+            timerRight = setInterval(() => {
+              player1.positionX += 5
+            }, 20);
+          }
+          break;
+        case 38 : 
+          if(!timerUp){
+            timerUp = setInterval(() => {
+              player1.positionY -= 5
+            }, 20);
+          }
+          break;
+        case 40 : 
+          if(!timerDown){
+            timerDown = setInterval(() => {
+              player1.positionY += 5
+            }, 20);
+          }
+          break;
+        case 65 : 
+          player1.shot()    // 绑定射击按键
+          break;
+      }
+    })
+    // 绑定方向抬起的事件处理程序
+    document.addEventListener('keyup',function(e){
+      switch(e.keyCode){
+        case 37: 
+          clearInterval(timerLeft);
+          timerLeft = null;
+          break;
+        case 39: 
+          clearInterval(timerRight);
+          timerRight = null;
+          break;
+        case 38: 
+          clearInterval(timerUp);
+          timerUp = null;
+          break;
+        case 40: 
+          clearInterval(timerDown);
+          timerDown = null;
+          break;
+      }
+
+    })
+
+  
+  
+
+  </script>
+
+</body>
+</html>
